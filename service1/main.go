@@ -75,6 +75,10 @@ func main() {
 	}()
 
 	timeCount := time.Now()
+	err = MainProcess()
+	if err != nil {
+		log.Error().Msg(err.Error())
+	}
 	for {
 		select {
 		case <-done:

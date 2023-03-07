@@ -23,5 +23,5 @@ chmod +x build-service.sh
 docker-compose up
 ```
 
-Now system start. Can follow response from `http://127.0.0.1:8080/crypto/get`
-Or go to url `http://127.0.0.1:8880` for display with adminer
+Now system start. You can follow response from `http://127.0.0.1:8080/crypto/get`. Wait for the system to retrieve the value for about 10 seconds before showing the results.
+And go to url `http://127.0.0.1:8880` for display with adminer

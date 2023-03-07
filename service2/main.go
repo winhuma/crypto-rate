@@ -93,6 +93,7 @@ func main() {
 
 	timeCount := time.Now()
 	log.Info().Msg("...Start...")
+	MainProcess(reader, myredis)
 	for {
 		select {
 		case <-done:
