@@ -42,6 +42,11 @@ func GetPriceRateAll(c *fiber.Ctx) error {
 		if err != nil && err != gorm.ErrRecordNotFound {
 			return myfunc.MyErrFormat(err)
 		}
+		return c.Status(200).JSON(map[string]interface{}{
+			"message": "success",
+			"data":    mydata.Data,
+		})
+
 	}
 
 	myres = result
