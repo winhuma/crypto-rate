@@ -30,23 +30,25 @@ func GetPriceRateAll(c *fiber.Ctx) error {
 	}
 	var result = map[string]interface{}{}
 	var myres interface{}
-	if mydata != "" {
-		err = json.Unmarshal([]byte(mydata), &result)
-		if err != nil {
-			return myfunc.MyErrFormat(err)
-		}
-	} else {
-		var mydata mymodels.DBCryptoRate
+	if mydata == "" {
+		var getRate mymodels.DBCryptoRate
 		mydb := myconnect.DBInstance()
-		err = mydb.Table("crypto_rate").Last(&mydata).Error
+		err = mydb.Table("crypto_rate").Last(&getRate).Error
 		if err != nil && err != gorm.ErrRecordNotFound {
 			return myfunc.MyErrFormat(err)
 		}
-		return c.Status(200).JSON(map[string]interface{}{
-			"message": "success",
-			"data":    mydata.Data,
-		})
+		if !getRate.Data.Valid {
+			return c.Status(200).JSON(map[string]interface{}{
+				"message": "success",
+				"data":    nil,
+			})
+		}
+		mydata = getRate.Data.String
+	}
 
+	err = json.Unmarshal([]byte(mydata), &result)
+	if err != nil {
+		return myfunc.MyErrFormat(err)
 	}
 
 	myres = result
